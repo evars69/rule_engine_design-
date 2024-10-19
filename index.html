@@ -1,0 +1,39 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rule Engine - Eligibility Checker</title>
+</head>
+<body>
+    <h1>User Eligibility Checker</h1>
+    <form id="userDataForm">
+        Age: <input type="number" name="age" id="age"><br><br>
+        Department: <input type="text" name="department" id="department"><br><br>
+        Salary: <input type="number" name="salary" id="salary"><br><br>
+        Experience: <input type="number" name="experience" id="experience"><br><br>
+        <button type="button" onclick="submitData()">Check Eligibility</button>
+    </form>
+
+    <script>
+        function submitData() {
+            let formData = {
+                age: document.getElementById("age").value,
+                department: document.getElementById("department").value,
+                salary: document.getElementById("salary").value,
+                experience: document.getElementById("experience").value
+            };
+
+            fetch('/evaluate_rule', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(data => alert('Eligibility: ' + data.result))
+            .catch(error => alert('Error: ' + error));
+        }
+    </script>
+</body>
+</html>
